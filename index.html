@@ -64,7 +64,7 @@
             });
 
  
-	L.geoJson(geoJSON).addTo(map);
+	//L.geoJson(geoJSON).addTo(map);
 
 
             var buildings = '[out:json];(node(poly:"'
@@ -92,6 +92,8 @@
 
                 L.geoJson(geoJSON, {
                     filter: function(feature, layer) {
+
+		
                         console.log(feature);
 
                         if (feature.properties.tags.building == null) {
@@ -100,6 +102,16 @@
 
                         return true;
                     },
+
+			onEachFeature: function (feature, layer) {
+			console.log(feature);
+			if(feature.properties.tags.name != null){
+				layer.bindPopup(feature.properties.tags.name);
+
+			}
+        		//layer.bindPopup(feature.properties.description);
+    			}
+
                 }).addTo(map);
             });
 
